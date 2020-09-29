@@ -6,9 +6,14 @@ import { auth } from 'myFirebase';
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser);
+  const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
+      if (user) {
+        setUserObj(user);
+      }
+
       setIsLoggedIn(!!user);
       setInit(true);
     });
@@ -16,7 +21,11 @@ function App() {
 
   return (
     <>
-      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : '불러오는중..'}
+      {init ? (
+        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+      ) : (
+        '불러오는중..'
+      )}
       <footer>&copy; {new Date().getFullYear()} Cawitter</footer>
     </>
   );
