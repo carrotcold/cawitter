@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from 'myFirebase';
+import Caweet from 'components/Caweet';
 
 export default function Home({ userObj }) {
   const [caweet, setCaweet] = useState('');
@@ -45,9 +46,11 @@ export default function Home({ userObj }) {
       </form>
       <div>
         {caweets.map(caweet => (
-          <div key={caweet.id}>
-            <h4>{caweet.text}</h4>
-          </div>
+          <Caweet
+            key={caweet.id}
+            caweetObj={caweet}
+            isOwner={caweet.creatorId === userObj.uid}
+          />
         ))}
       </div>
     </div>
